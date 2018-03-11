@@ -1,0 +1,35 @@
+normal
+
+var avgVol = 10;
+var curTimeAdded = 0;
+var audioLev = thisComp.layer("Audio Amplitude").effect("Both Channels")("Slider");
+var mult = 5;
+
+var curFrame = Math.round(time/thisComp.frameDuration);
+while( curFrame >= 0){
+	var t = curFrame * thisComp.frameDuration;
+	var curVol = audioLev .valueAtTime(t);
+	var addTime = (curVol/avgVol) * thisComp.frameDuration;
+	curTimeAdded = curTimeAdded + addTime;
+	curFrame--;
+}
+
+
+
+w/ clamp
+
+var avgVol = 25;
+var curTimeAdded = 0;
+var audioLev = thisComp.layer("Audio Amplitude").effect("Both Channels")("Slider");
+var mult = 1;
+
+var curFrame = Math.round(time/thisComp.frameDuration);
+while( curFrame >= 0){
+	var t = curFrame * thisComp.frameDuration;
+	var curVol = audioLev .valueAtTime(t);
+	var addTime = clamp((curVol/avgVol),0,1) * thisComp.frameDuration;
+	curTimeAdded = curTimeAdded + addTime;
+	curFrame--;
+}
+
+curTimeAdded * mult
